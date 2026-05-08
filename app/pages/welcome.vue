@@ -1,45 +1,21 @@
+<script lang="ts" setup>
+const { loggedIn, user, session, fetch, clear } = useUserSession()
+console.log(user)
+</script>
+
 <template>
-  <div class="flex h-screen justify-center items-center flex-wrap">
-    <div class="pr-4 justify-center items-center">
-      <div class="px-6 py-10 rounded-lg border-solid border-4 border-gray-300 text-9xl">
-        <span class="animated">台</span>
+  <div class="flex flex-col gap-4">
+      <TaMaRA />
+      <div>
+        <div v-if="loggedIn && user && session">
+          <h1>Welcome {{ user }}!</h1>
+          <p>Logged in since {{ session.loggedInAt }}</p>
+          <button @click="clear">Logout</button>
+        </div>
+        <div class="flex flex-col gap-y-1" v-else>
+          <NuxtLink class="button rounded bg-blue-300 p-2 text-center" to="/auth/login">Войти</NuxtLink>
+          <NuxtLink class="button rounded bg-blue-300 p-2 text-center" to="/auth/register">Зарегистрироваться</NuxtLink>
+        </div>
       </div>
     </div>
-    <div>
-      <div>
-        <span class="text-3xl font-bold">T</span>
-      </div>
-      <div>
-        <span class="text-3xl font-bold">A</span>iwanese
-      </div>
-      <div>
-        <span class="text-3xl font-bold">M</span>
-      </div>
-      <div>
-        <span class="text-3xl font-bold">A</span>hjong
-      </div>
-      <div>
-        <span class="text-3xl font-bold">R</span>ules
-      </div>
-      <div>
-        <span class="text-3xl font-bold">A</span>ssistant
-      </div>
-    </div>
-  </div>
 </template>
-
-<style lang="css" scoped>
-.animated {
-  color: #000095;
-  animation: fadein 2s ease-in-out;
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-</style>
