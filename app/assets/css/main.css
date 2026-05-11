@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
 a {
   color: #000095;
 }
@@ -5,4 +8,6 @@ a {
 .button-taiwanese {
   background-color: #000095;
   color: white;
+  display: block;
+  text-align: center;
 }

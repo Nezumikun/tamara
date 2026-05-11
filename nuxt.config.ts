@@ -1,8 +1,9 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-auth-utils'],
+  modules: [ 'nuxt-auth-utils', "@nuxt/ui" ],
   runtimeConfig: {
     session: {
       maxAge: 60 * 60 * 24 * 7, // 1 week
@@ -18,5 +19,10 @@ export default defineNuxtConfig({
     '/auth/**': {
       appLayout: 'welcome'
     }
-  }
+  },
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
+  },
 })

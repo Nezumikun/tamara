@@ -46,7 +46,7 @@ async function login(event: Event) {
           </div>
 
           <div>
-            <button class="flex w-full justify-center rounded-md rounded button-taiwanese p-2 text-center">Войти</button>
+            <UButton class="button-taiwanese p-2 w-full">Войти</UButton>
           </div>
           <div class="flex items-center justify-between">
             <div class="block">

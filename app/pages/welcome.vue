@@ -10,9 +10,9 @@ const { loggedIn, user, session, fetch, clear } = useUserSession()
           <div class="w-full text-center">Добро пожаловать, {{ user.name ?? "" }}!</div>
           <NuxtLink class="w-full button rounded-md button-taiwanese p-2 text-center" to="/auth/logout">Выйти</NuxtLink>
         </div>
-        <div class="flex flex-col w-full gap-y-1" v-else>
-          <NuxtLink class="button rounded-md button-taiwanese p-2 text-center" to="/auth/login">Войти</NuxtLink>
-          <NuxtLink class="button rounded-md button-taiwanese p-2 text-center" to="/auth/register">Зарегистрироваться</NuxtLink>
+        <div class="flex flex-col w-full gap-y-1 text-center" v-else>
+          <UButton class="button-taiwanese p-2" to="/auth/login">Войти</UButton>
+          <UButton class="button-taiwanese p-2" to="/auth/register">Зарегистрироваться</UButton>
         </div>
       </div>
     </div>
