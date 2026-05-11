@@ -7,26 +7,36 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const nezumi = await prisma.user.create({
-    data: {
-      name: "Nezumikun",
-      email: "nezumikun@yandex.ru",
-      role: "ADMIN",
-      password: await bcrypt.hash("123456", 10),
-      fullName: "Кожевников Алексей"
-    },
+  const users = await prisma.user.createManyAndReturn({
+    data: [
+      {
+        name: "Nezumikun",
+        email: "nezumikun@yandex.ru",
+        role: "ADMIN",
+        password: await bcrypt.hash("12345678", 10),
+        fullName: "Кожевников Алексей"
+      },
+      {
+        name: "Katevnik",
+        email: "e.kozhevnikova@gmail.com",
+        password: await bcrypt.hash("katevnik", 10),
+        fullName: "Кожевникова Екатерина"
+      },
+      {
+        name: "Sneppk",
+        email: "diana@murchat.ru",
+        password: await bcrypt.hash("diana123", 10),
+        fullName: "Кожевникова Диана"
+      },
+      {
+        name: "Yonji",
+        email: "none@none",
+        password: await bcrypt.hash("9874563112", 10),
+        fullName: "Четвёртый игрок"
+      },
+    ]
   });
-  console.log(`Created user: ${nezumi.name}`);
-  const nr = await prisma.user.create({
-    data: {
-      name: "Незарегистрированный",
-      email: "not@registered",
-      password: "",
-      role: "SYSTEM",
-      fullName: "Незарегистрированный пользователь"
-    },
-  });
-  console.log(`Created user: ${nr.name}`);
+  console.log(`Created users: `, users.map(x => x.name).join(", "));
 }
 
 main()
