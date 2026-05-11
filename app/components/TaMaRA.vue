@@ -2,7 +2,7 @@
   <div class="flex flex-row gap-4">
     <div class="justify-center items-center">
       <div class="px-6 py-10 rounded-lg border-solid border-4 border-gray-300 text-9xl">
-        <span class="animated">台</span>
+        <NuxtLink class="animated" to="/">台</NuxtLink>
       </div>
     </div>
     <div>
