@@ -1,12 +1,12 @@
 declare module '#auth-utils' {
   interface User {
-    id: Number,
+    id: number,
     name: String,
     fullName: String
   }
 
   interface UserSession {
-    // Add your own fields
+    currentGame: Game?
   }
 
   interface SecureSessionData {

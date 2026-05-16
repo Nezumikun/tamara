@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
           name: user.name!,
           fullName: user.fullName!
         },
+        currentGame: null
       })
       return {}
     }
