@@ -4,15 +4,16 @@ const { loggedIn, user, session, fetch, clear } = useUserSession()
 async function updateSession() {
   if (loggedIn) {
     console.log('Надо бы обновить сессию', new Date())
-    await $fetch('/api/session/update', {
-      method: 'GET',
-    })
-    .then(fetch)
-    .then(async () => {
+    try {
+      await $fetch('/api/session/update', {
+        method: 'GET',
+      })
+      await fetch()
       console.log(session.value)
-    }).catch((err) => {
+    }
+    catch(err) {
       console.log(err)
-    })
+    }
   }
   setTimeout(updateSession, 10 * 1000)
 }
