@@ -13,7 +13,7 @@ datasource db {
 }
 
 enum Role {
-  USER
+  PLAYER
   ADMIN
 }
 
@@ -24,13 +24,13 @@ enum Place {
   NORTH
 }
 
-model User {
+model Player {
   id         Int      @id @default(autoincrement())
   email      String   @unique
   password   String
   name       String
   fullName   String
-  role       Role     @default(USER)
+  role       Role     @default(PLAYER)
   createdAt  DateTime @default(now())
   gameCreator Game[]
   players GamePlayer[]
@@ -40,7 +40,7 @@ model Game {
   id           Int          @id @default(autoincrement())
   createdAt    DateTime     @default(now())
   createdById Int
-  createdBy  User @relation(fields: [createdById], references: [id])
+  createdBy  Player @relation(fields: [createdById], references: [id])
   finished     Boolean      @default(false)
   finishedAt   DateTime?
   roundLimit  Int
@@ -51,8 +51,8 @@ model GamePlayer {
   id           Int          @id @default(autoincrement())
   gameId Int
   game  Game @relation(fields: [gameId], references: [id])
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  playerId Int
+  player Player @relation(fields: [playerId], references: [id])
   initialPlace Place
   @@unique([gameId, initialPlace])
 }

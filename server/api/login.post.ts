@@ -9,20 +9,20 @@ const bodySchema = z.object({
 export default defineEventHandler(async (event) => {
   const { email, password } = await readValidatedBody(event, bodySchema.parse)
 
-  const user = await prisma.user.findUnique({
+  const player = await prisma.player.findUnique({
     where: {
       email: email
     }
   });
 
-  if (user) {
-    const match = await bcrypt.compare(password, user.password);
+  if (player) {
+    const match = await bcrypt.compare(password, player.password);
     if (match) {
       await setUserSession(event, {
         user: {
-          id: user.id,
-          name: user.name!,
-          fullName: user.fullName!
+          id: player.id,
+          name: player.name!,
+          fullName: player.fullName!
         },
         currentGame: null
       })
