@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+const { loggedIn, user } = useUserSession()
+
 
 const route = useRoute()
 
@@ -18,13 +20,9 @@ const items = computed<NavigationMenuItem[]>(() => [{
         <UNavigationMenu :items="items" />
 
         <template #right>
-          <UButton
-            color="neutral"
-            variant="ghost"
-            to="https://github.com/Nezumikun/tamara"
-            target="_blank"
-            icon="i-simple-icons-github"
-            aria-label="GitHub"
+          <UAvatar
+            :alt="user?.fullName"
+            v-if="loggedIn"
           />
         </template>
 

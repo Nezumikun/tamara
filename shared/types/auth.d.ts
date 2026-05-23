@@ -1,8 +1,8 @@
 declare module '#auth-utils' {
   interface User {
     id: number,
-    name: String,
-    fullName: String
+    name: string,
+    fullName: string
   }
 
   interface UserSession {
