@@ -18,7 +18,7 @@ async function updateSession() {
   setTimeout(updateSession, 10 * 1000)
 }
 
-await updateSession()
+//await updateSession()
 </script>
 
 <template>

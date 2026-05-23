@@ -16,23 +16,27 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 })
 
+const toast = useToast()
+
 async function login(event: FormSubmitEvent<Schema>) {
   console.log(event)
   const target = event.target as HTMLFormElement
 
-  await $fetch('/api/login', {
-    method: 'POST',
-    body: {
-      email: target.email.value,
-      password: target.password.value,
-    },
-  })
-  .then(fetch)
-  .then(async () => {
+  try {
+    await $fetch('/api/login', {
+      method: 'POST',
+      body: {
+        email: target.email.value,
+        password: target.password.value,
+      },
+    })
+    await fetch()
     await navigateTo("/")
-  }).catch((err) => {
-    console.log(err)
-  })
+  } 
+  catch(err) {
+    console.log('Ошибка входа', err)
+    toast.add({ title: "Ошибка", description: "Неправильный логин или пароль", color: 'error', duration: 2000 })
+  }
 }
 </script>
 
@@ -50,7 +54,7 @@ async function login(event: FormSubmitEvent<Schema>) {
           </UFormField>
           <UButton class="button-taiwanese p-2 w-full" type="submit">Войти</UButton>
           <div class="flex items-center justify-between">
-            <div class="block">
+            <div class="block text-sm">
               Если у вас ещё нет учётной записи на сайте, воспользуйтесь <NuxtLink class="" to="/auth/register">страницей регистрации</NuxtLink>
             </div>
           </div>
