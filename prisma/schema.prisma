@@ -25,34 +25,37 @@ enum Place {
 }
 
 model Player {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  password   String
-  name       String
-  fullName   String
-  role       Role     @default(PLAYER)
-  createdAt  DateTime @default(now())
+  id          Int          @id @default(autoincrement())
+  uuid        String       @unique @default(uuid())
+  email       String       @unique
+  password    String
+  name        String
+  fullName    String
+  role        Role         @default(PLAYER)
+  createdAt   DateTime     @default(now())
   gameCreator Game[]
-  players GamePlayer[]
+  players     GamePlayer[]
 }
 
 model Game {
-  id           Int          @id @default(autoincrement())
-  createdAt    DateTime     @default(now())
+  id          Int          @id @default(autoincrement())
+  uuid        String       @unique @default(uuid())
+  createdAt   DateTime     @default(now())
   createdById Int
-  createdBy  Player @relation(fields: [createdById], references: [id])
-  finished     Boolean      @default(false)
-  finishedAt   DateTime?
+  createdBy   Player       @relation(fields: [createdById], references: [id])
+  finished    Boolean      @default(false)
+  finishedAt  DateTime?
   roundLimit  Int
-  players GamePlayer[]
+  players     GamePlayer[]
 }
 
 model GamePlayer {
-  id           Int          @id @default(autoincrement())
-  gameId Int
-  game  Game @relation(fields: [gameId], references: [id])
-  playerId Int
-  player Player @relation(fields: [playerId], references: [id])
+  id           Int    @id @default(autoincrement())
+  gameId       Int
+  game         Game   @relation(fields: [gameId], references: [id])
+  playerId     Int
+  player       Player @relation(fields: [playerId], references: [id])
   initialPlace Place
+
   @@unique([gameId, initialPlace])
 }
