@@ -2,8 +2,7 @@
 const { loggedIn, user, session, fetch, clear } = useUserSession()
 
 if (loggedIn) {
-  await fetch()
-  console.log(session.value)
+  navigateTo(`/game/${session.value?.currentGame.uuid}`)
 } else {
   navigateTo('/')
 }
@@ -11,7 +10,6 @@ if (loggedIn) {
 
 
 <template>
-  <div>
-    2222
+  <div class="text-center">
   </div>
 </template>>
