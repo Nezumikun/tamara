@@ -18,13 +18,30 @@ export default defineEventHandler(async (event) => {
   if (player) {
     const match = await bcrypt.compare(password, player.password);
     if (match) {
+      const currentGame = await prisma.game.findFirst({
+        where: {
+          OR: [
+            {
+              createdById: player.id
+            },
+            {
+              players: {
+                some: {
+                  playerId: player.id
+                }
+              }
+            }
+          ],
+          finished: false
+        }
+      });      
       await setUserSession(event, {
         user: {
           id: player.id,
           name: player.name!,
           fullName: player.fullName!
         },
-        currentGame: null
+        currentGame: currentGame
       })
       return {}
     }

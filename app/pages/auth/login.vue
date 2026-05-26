@@ -1,8 +1,10 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import * as z from 'zod'
-const { fetch } = useUserSession()
-
+import type { FetchError } from 'ofetch';
 import type { FormError, FormSubmitEvent } from '@nuxt/ui'
+
+const { fetch } = useUserSession()
 
 const schema = z.object({
   email: z.email('Неправильный e-mail'),
@@ -16,13 +18,16 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 })
 
-const toast = useToast()
+const pageData = ref({
+  errorMessage: ''
+})
 
 async function login(event: FormSubmitEvent<Schema>) {
   console.log(event)
   const target = event.target as HTMLFormElement
 
   try {
+    pageData.value.errorMessage = ''
     await $fetch('/api/login', {
       method: 'POST',
       body: {
@@ -33,9 +38,8 @@ async function login(event: FormSubmitEvent<Schema>) {
     await fetch()
     await navigateTo("/")
   } 
-  catch(err) {
-    console.log('Ошибка входа', err)
-    toast.add({ title: "Ошибка", description: "Неправильный логин или пароль", color: 'error', duration: 2000 })
+  catch(ex) {
+    pageData.value.errorMessage = (ex as FetchError).data.message
   }
 }
 </script>
@@ -53,6 +57,14 @@ async function login(event: FormSubmitEvent<Schema>) {
             <UInput v-model="state.password" type="password" required autocomplete="current-password" class="w-full" />
           </UFormField>
           <UButton class="button-taiwanese p-2 w-full" type="submit">Войти</UButton>
+          <UAlert
+            color="error"
+            title="Ошибка"
+            :description="pageData.errorMessage"
+            v-if="pageData.errorMessage != ''"
+            variant="subtle"
+            class="py-2 my-2"
+          />
           <div class="flex items-center justify-between">
             <div class="block text-sm">
               Если у вас ещё нет учётной записи на сайте, воспользуйтесь <NuxtLink class="" to="/auth/register">страницей регистрации</NuxtLink>
